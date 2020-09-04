@@ -2,7 +2,8 @@
 
 import shutil
 import psutil
-
+import os
+import csv
 
 def check_disk_usage(disk):
     du = shutil.disk_usage(disk)
@@ -30,3 +31,26 @@ def time_to_automate(automate_time, perform_time, number_of_times):
         return f"Total time of this task is {total_time}. It's worth it!"
     else:
         return f"Total time of this task is {total_time}. It's not worth it."
+
+
+def read_a_file(directory, filename):
+    # file = open(os.path.abspath(filename))
+    file = open(os.path.join(directory, filename))
+    lines = file.readlines()
+    file.close()
+    file.__sizeof__()
+    newlines = []
+    for line in lines:
+        newlines.append(line.strip())
+    return newlines, os.stat(directory+filename)
+
+
+def read_a_csv_file(directory, filename):
+    with open(os.path.join(directory, filename)) as file:
+        file_csv = csv.reader(file)
+        for row in file_csv:
+            name, age, role = row
+            print(f"Name: {name}, Age: {age}, Role: {role}")
+        return "CSV file read has been completed."
+
+
